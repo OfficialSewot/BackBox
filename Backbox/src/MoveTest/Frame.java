@@ -41,7 +41,7 @@ public class Frame extends JFrame{
        
     
     public void repaintScreen(){
-//      screen.repaint();
+    	//screen.repaint();
         Graphics g = strat.getDrawGraphics();
         draw(g);
         g.dispose();
@@ -57,7 +57,7 @@ public class Frame extends JFrame{
         g.drawImage(bg.getLook(), bg.getX() + bg.getLook().getWidth(), 0, null);
         for(int i = 0;i<bullets.size(); i++){
         	Bullet b = bullets.get(i);
-        	g.drawImage(b.getLook(), b.getBounding().x, b.getBounding().y, null);
+        	g.drawImage(b.getLook(), b.getBounding().x +5, b.getBounding().y +20, null);
         }
         g.drawImage(player.getLook(), player.getBounding().x, player.getBounding().y, null);
             

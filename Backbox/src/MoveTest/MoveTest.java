@@ -4,7 +4,6 @@ package MoveTest;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 

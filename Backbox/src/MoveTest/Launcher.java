@@ -18,6 +18,11 @@ import javax.swing.JCheckBox;
 @SuppressWarnings("serial")
 public class Launcher extends JFrame {
 
+	/*
+	 * 
+	 * Screen Resolution changer is not working but it uses now the normal screen resolution. Gonna fix this later (or never)
+	 * 
+	 */
 	
 	private static Launcher frame;
 	private JPanel contentPane;
