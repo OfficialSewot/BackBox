@@ -17,15 +17,17 @@ import javax.swing.JFrame;
 public class Frame extends JFrame{
     
     final Player player;
+    final Enemy enemy;
     final Background bg;
        
     private BufferStrategy strat;
     private LinkedList<Bullet> bullets;
     
     
-    public Frame(Player player, Background bg, LinkedList<Bullet> bullets){
+    public Frame(Player player, Enemy enemy, Background bg, LinkedList<Bullet> bullets){
         super("MoveTest");
         addKeyListener(new Keyboard());
+        this.enemy = enemy;
         this.player = player;
         this.bg = bg;
         this.bullets = bullets;
@@ -60,6 +62,10 @@ public class Frame extends JFrame{
         	g.drawImage(b.getLook(), b.getBounding().x +5, b.getBounding().y +20, null);
         }
         g.drawImage(player.getLook(), player.getBounding().x, player.getBounding().y, null);
-            
+        
+       for(int enc = 0; enc < 4;enc++){ 
+        	g.drawImage(enemy.getLook(), enemy.getBounding().x, enemy.getBounding().y, null);
+    
+       }
     }
 }

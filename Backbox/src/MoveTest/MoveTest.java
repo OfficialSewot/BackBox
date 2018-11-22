@@ -20,7 +20,8 @@ public class MoveTest {
     	LinkedList<Bullet> bullets = new LinkedList<Bullet>();
         Player player = new Player(300, 300, 50, width, height, bullets);
         Background bg = new Background(100);
-        Frame f = new Frame(player, bg, bullets);
+        Enemy enemy = new Enemy(300, 300, 50, width, height);
+        Frame f = new Frame(player, enemy, bg, bullets);
         
         //Frame settings
         
@@ -54,6 +55,7 @@ public class MoveTest {
             lastFrame = thisFrame;
             
             player.update(timeSinceLastFrame);
+            enemy.update(timeSinceLastFrame);
             bg.update(timeSinceLastFrame);
             f.repaintScreen();
             
