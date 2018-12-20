@@ -1,27 +1,41 @@
 package MoveTest;
 
 
+import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
 
 
+
 // Main class
-public class MoveTest {
-    public static void RunGame(int width, int height, int bitDepth, int refreshRate, boolean fullscreen, boolean customResolution) {
+public class Main {
+    public static void main(String[] args) {
         
         //Player, Background, Frame and Bullet is initialized
         
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    	
+    	int width = (int) screenSize.getWidth();
+    	int height = (int) screenSize.getHeight(); 
+    	int bitDepth = 32; 
+    	int refreshRate = 60;
     	
     	LinkedList<Bullet> bullets = new LinkedList<Bullet>();
-        Player player = new Player(300, 300, 50, width, height, bullets);
         Background bg = new Background(100);
-        Enemy enemy = new Enemy(300, 300, 50, width, height);
-        Frame f = new Frame(player, enemy, bg, bullets);
+        //Enemy enemy = new Enemy(300, 300, 50, width, height);
+        LinkedList<Enemy> enemys = new LinkedList<Enemy>();
+        enemys.add(new Enemy(100,100, bullets));
+        
+        Player player = new Player(300, 300, 50, width, height, bullets, enemys);
+        
+        Frame f = new Frame(player, enemys, bg, bullets);
+        
         
         //Frame settings
         
@@ -36,14 +50,8 @@ public class MoveTest {
         DisplayMode displayMode = new DisplayMode (width, height, bitDepth, refreshRate);
         GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = environment.getDefaultScreenDevice();
-        
-        if (fullscreen = true) {
-			device.setFullScreenWindow(f);
-		}
-		
-        if (customResolution = false) {
-			device.setDisplayMode(displayMode);
-		}
+        device.setFullScreenWindow(f);
+		device.setDisplayMode(displayMode);
         
 		long lastFrame = System.currentTimeMillis();
         
@@ -55,12 +63,15 @@ public class MoveTest {
             lastFrame = thisFrame;
             
             player.update(timeSinceLastFrame);
-            enemy.update(timeSinceLastFrame);
             bg.update(timeSinceLastFrame);
             f.repaintScreen();
             
             for(int i = 0; i<bullets.size(); i++){
             	bullets.get(i).update(timeSinceLastFrame);
+            }
+            
+            for(int i = 0; i<enemys.size(); i++) {
+            	enemys.get(i).update(timeSinceLastFrame);
             }
             
             try {

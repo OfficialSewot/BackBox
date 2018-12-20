@@ -15,14 +15,18 @@ public class Player {
     private float f_posy;
     private int worldsize_x;
     private int worldsize_y;
-    private BufferedImage look;
+    private static BufferedImage look;
+    private static BufferedImage look_dead;
     private LinkedList<Bullet> bullets;
+    private LinkedList<Enemy> enemys;
     private float timeSinceLastShot = 0;
-    private final float SHOTFREQUENZY = 0.1f;
+    private final float SHOTFREQUENZY = 0.2f;
+    private boolean alive = true;
     
-    public Player (int x, int y, int size, int worldsize_x, int worldsize_y, LinkedList<Bullet> bullets){
+    public Player (int x, int y, int size, int worldsize_x, int worldsize_y, LinkedList<Bullet> bullets, LinkedList<Enemy> enemys){
         try {
-            look = ImageIO.read(getClass().getClassLoader().getResourceAsStream("gfx/raumschiffchen.png"));
+            look = ImageIO.read(getClass().getClassLoader().getResourceAsStream("gfx/player.png"));
+            look_dead = ImageIO.read(getClass().getClassLoader().getResourceAsStream("gfx/player_destroyed.png"));
         } catch (IOException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -32,6 +36,7 @@ public class Player {
         this.worldsize_x = worldsize_x;
         this.worldsize_y = worldsize_y;
         this.bullets = bullets;
+        this.enemys = enemys;
         
 
     }
@@ -41,7 +46,7 @@ public class Player {
     
     
     public void update (float timeSinceLastFrame){
-        
+        if(!alive) return;
     	timeSinceLastShot+=timeSinceLastFrame;
     	
         //Hier wird die Bewegungssteuerung an den Player uebergeben
@@ -63,7 +68,13 @@ public class Player {
         bounding.x=(int)f_posx;
         bounding.y=(int)f_posy;
          
-         
+         for(int i = 0; i<enemys.size(); i++) {
+        	 Enemy e = enemys.get(i);
+        	 
+        	 if(e.isAlive()&&bounding.intersects(e.getBounding())) {
+        		 alive = false;
+        	 }
+         }
         
     }
     public Rectangle getBounding(){
@@ -71,7 +82,8 @@ public class Player {
     }
     
     public BufferedImage getLook(){
-        return look;
+        if(alive) return look;
+        else return look_dead;
     }
 }
 
