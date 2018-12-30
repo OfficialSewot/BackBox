@@ -5,6 +5,8 @@
  */
 package MoveTest;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
@@ -22,6 +24,7 @@ public class Frame extends JFrame{
     private BufferStrategy strat;
     private LinkedList<Enemy> enemys;
     private LinkedList<Bullet> bullets;
+    Font myFont = new Font("Arial", 1, 25);
     
     
     public Frame(Player player, LinkedList<Enemy> enemys, Background bg, LinkedList<Bullet> bullets){
@@ -31,6 +34,7 @@ public class Frame extends JFrame{
         this.player = player;
         this.bg = bg;
         this.bullets = bullets;
+        
     
     }
     
@@ -57,16 +61,23 @@ public class Frame extends JFrame{
 	private void draw(Graphics g){
         g.drawImage(bg.getLook(), bg.getX(), 0, null);
         g.drawImage(bg.getLook(), bg.getX() + bg.getLook().getWidth(), 0, null);
-        for(int i = 0;i<bullets.size(); i++){
-        	Bullet b = bullets.get(i);
-        	g.drawImage(b.getLook(), b.getBounding().x +5, b.getBounding().y +20, null);
-        }
+       
         for(int i = 0; i<enemys.size(); i++) {
         	Enemy e = enemys.get(i);
         	g.drawImage(e.getLook(), e.getBounding().x, e.getBounding().y, null);
+        	
+        	
         }
-        
+         for(int i = 0;i<bullets.size(); i++){
+        	Bullet b = bullets.get(i);
+        	g.drawImage(b.getLook(), b.getBounding().x +5, b.getBounding().y +20, null);
+        }
+         
         g.drawImage(player.getLook(), player.getBounding().x, player.getBounding().y, null);
+        g.setFont (myFont);
+        g.setColor(Color.white);
+        g.drawString("Score: " + String.valueOf(Enemy.getScore()), 50, 60);
+        
         
     }
 }

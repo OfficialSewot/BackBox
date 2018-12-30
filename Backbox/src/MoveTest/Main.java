@@ -3,18 +3,26 @@ package MoveTest;
 
 import java.awt.Dimension;
 import java.awt.DisplayMode;
+import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
 
-
 // Main class
 public class Main {
+	
+	static LinkedList<Bullet> bullets = new LinkedList<Bullet>();
+	static Background bg = new Background(50);
+	static LinkedList<Enemy> enemys = new LinkedList<Enemy>();
+	static Player player = new Player(300, 300, 50, 1920, 1080, bullets, enemys);
+	static Random r = new Random();
+	
     public static void main(String[] args) {
         
         //Player, Background, Frame and Bullet is initialized
@@ -26,13 +34,7 @@ public class Main {
     	int bitDepth = 32; 
     	int refreshRate = 60;
     	
-    	LinkedList<Bullet> bullets = new LinkedList<Bullet>();
-        Background bg = new Background(100);
-        //Enemy enemy = new Enemy(300, 300, 50, width, height);
-        LinkedList<Enemy> enemys = new LinkedList<Enemy>();
-        enemys.add(new Enemy(100,100, bullets));
-        
-        Player player = new Player(300, 300, 50, width, height, bullets, enemys);
+    	spawnEnemy();
         
         Frame f = new Frame(player, enemys, bg, bullets);
         
@@ -46,6 +48,9 @@ public class Main {
         f.setResizable(false);
         f.setLocationRelativeTo(null);
         f.makeStrat();
+        
+        final float ENEMYSPAWNTIME = 1f;
+        float timeSinceLastEnemySpawn = 0;
 
         DisplayMode displayMode = new DisplayMode (width, height, bitDepth, refreshRate);
         GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -61,6 +66,12 @@ public class Main {
             long thisFrame = System.currentTimeMillis();
             float timeSinceLastFrame = ((float)(thisFrame-lastFrame)) / 1000f;
             lastFrame = thisFrame;
+            timeSinceLastEnemySpawn+=timeSinceLastFrame;
+            
+            if(timeSinceLastEnemySpawn>ENEMYSPAWNTIME) {
+            	timeSinceLastEnemySpawn-=ENEMYSPAWNTIME;
+            	spawnEnemy();
+            }
             
             player.update(timeSinceLastFrame);
             bg.update(timeSinceLastFrame);
@@ -82,6 +93,10 @@ public class Main {
             
         }
         
+    }
+    
+    public static void spawnEnemy() {
+    	enemys.add(new Enemy(1920,r.nextInt(1080-Enemy.getHeight()), bullets));
     }
     
 }

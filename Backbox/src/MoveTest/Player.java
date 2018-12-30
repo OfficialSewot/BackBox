@@ -22,6 +22,8 @@ public class Player {
     private float timeSinceLastShot = 0;
     private final float SHOTFREQUENZY = 0.2f;
     private boolean alive = true;
+    private int health = 3;
+    private int sprint;
     
     public Player (int x, int y, int size, int worldsize_x, int worldsize_y, LinkedList<Bullet> bullets, LinkedList<Enemy> enemys){
         try {
@@ -37,7 +39,7 @@ public class Player {
         this.worldsize_y = worldsize_y;
         this.bullets = bullets;
         this.enemys = enemys;
-        
+        this.sprint = 0;
 
     }
 
@@ -54,6 +56,15 @@ public class Player {
         if(Keyboard.isKeyDown(KeyEvent.VK_S))f_posy+=300*timeSinceLastFrame;
         if(Keyboard.isKeyDown(KeyEvent.VK_D))f_posx+=300*timeSinceLastFrame;
         if(Keyboard.isKeyDown(KeyEvent.VK_A))f_posx-=300*timeSinceLastFrame;
+        
+        if(Keyboard.isKeyDown(KeyEvent.VK_W)&&Keyboard.isKeyDown(KeyEvent.VK_SHIFT))f_posy-=400*timeSinceLastFrame;
+        if(Keyboard.isKeyDown(KeyEvent.VK_S)&&Keyboard.isKeyDown(KeyEvent.VK_SHIFT))f_posy+=400*timeSinceLastFrame;
+        if(Keyboard.isKeyDown(KeyEvent.VK_D)&&Keyboard.isKeyDown(KeyEvent.VK_SHIFT))f_posx+=400*timeSinceLastFrame;
+        if(Keyboard.isKeyDown(KeyEvent.VK_A)&&Keyboard.isKeyDown(KeyEvent.VK_SHIFT))f_posx-=400*timeSinceLastFrame;
+        
+        if(Keyboard.isKeyDown(KeyEvent.VK_SHIFT))sprint++;
+        
+        
         if(timeSinceLastShot>SHOTFREQUENZY&&Keyboard.isKeyDown(KeyEvent.VK_SPACE)){
         	timeSinceLastShot = 0;
         	bullets.add(new Bullet(f_posx, f_posy, 500, 0));
@@ -72,13 +83,26 @@ public class Player {
         	 Enemy e = enemys.get(i);
         	 
         	 if(e.isAlive()&&bounding.intersects(e.getBounding())) {
-        		 alive = false;
+        		 health--;
+        		 enemys.remove(e);
+        		 if(health==0) {
+        			 alive = false;
+        		 }
         	 }
          }
         
     }
+    
+    public boolean isAlive() {
+    	return alive;
+    }
+    
     public Rectangle getBounding(){
         return bounding;
+    }
+    
+    public int sprint(){
+        return sprint;
     }
     
     public BufferedImage getLook(){
