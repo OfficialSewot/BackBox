@@ -22,13 +22,14 @@ public class Player {
     private static BufferedImage heart;
     private LinkedList<Bullet> bullets;
     private LinkedList<Enemy> enemys;
+    private LinkedList<Explosion> explosions;
     private float timeSinceLastShot = 0;
     private final float SHOTFREQUENZY = 0.4f;
     private boolean alive = true;
     public int health = 3;
     private int sprint;
     
-    public Player (int x, int y, int size, int worldsize_x, int worldsize_y, LinkedList<Bullet> bullets, LinkedList<Enemy> enemys){
+    public Player (int x, int y, int size, int worldsize_x, int worldsize_y, LinkedList<Bullet> bullets, LinkedList<Enemy> enemys, LinkedList<Explosion> explosions){
         try {
             look = ImageIO.read(getClass().getClassLoader().getResourceAsStream("gfx/player.png"));
             look_dead = ImageIO.read(getClass().getClassLoader().getResourceAsStream("gfx/player_destroyed.png"));
@@ -96,6 +97,7 @@ public class Player {
         		 enemys.remove(e);
         		 if(health==0) {
         			 alive = false;
+        			 
         		 }
         	 }
       	 }

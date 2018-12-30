@@ -18,7 +18,7 @@ public class Enemy {
 	private static BufferedImage look_dead;
 	private final static Random r = new Random();
 	private LinkedList<Bullet> bullets;
-	private LinkedList<Enemy> enemys;
+    private LinkedList<Explosion> explosions;
 	private boolean alive = true;
 	private static int score = 0;
 	
@@ -35,7 +35,7 @@ public class Enemy {
     private float posx;
     private float posy;
     
-    public Enemy(int x, int y, LinkedList<Bullet> bullets) {
+    public Enemy(int x, int y, LinkedList<Bullet> bullets, LinkedList<Explosion> explosions) {
     	
     	bounding = new Circle(x, y, (look.getWidth()/2));
     	this.posx = x;

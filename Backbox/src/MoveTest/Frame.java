@@ -24,16 +24,18 @@ public class Frame extends JFrame{
     private BufferStrategy strat;
     private LinkedList<Enemy> enemys;
     private LinkedList<Bullet> bullets;
+    private LinkedList<Explosion> explosions;
     Font myFont = new Font("Arial", 1, 25);
     
     
-    public Frame(Player player, LinkedList<Enemy> enemys, Background bg, LinkedList<Bullet> bullets){
+    public Frame(Player player, LinkedList<Enemy> enemys, Background bg, LinkedList<Bullet> bullets, LinkedList<Explosion> explosions){
         super("Main");
         addKeyListener(new Keyboard());
         this.enemys = enemys;
         this.player = player;
         this.bg = bg;
         this.bullets = bullets;
+        this.
         
     
     }
