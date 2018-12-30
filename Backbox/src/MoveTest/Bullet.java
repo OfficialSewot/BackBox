@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import javafx.scene.shape.Circle;
+
 
 
 
@@ -26,25 +28,25 @@ public class Bullet {
 	private float f_posy;
 	private float f_speedx;
 	private float f_speedy;
-	private Rectangle bounding;
+	private Circle bounding;
 	
 	public Bullet(float x, float y, float speedx, float speedy){
 		this.f_posx = x;
 		this.f_posy = y;
 		this.f_speedx = speedx;
 		this.f_speedy = speedy;
-		bounding = new Rectangle((int)x, (int)y, look.getWidth(), look.getHeight());
+		bounding = new Circle(x, y, (look.getWidth()/2));
 		
 	}
 	
 	public void update(float timeSinceLastFrame){
 		f_posx+=f_speedx*timeSinceLastFrame;
 		f_posy+=f_speedy*timeSinceLastFrame;
-		bounding.x = (int)f_posx;
-		bounding.y = (int)f_posy;
+		bounding.setCenterX(f_posx);
+        bounding.setCenterY(f_posy);
 	}
 	
-	public Rectangle getBounding(){
+	public Circle getBounding(){
 		return bounding;
 	}
 	

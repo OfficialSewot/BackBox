@@ -22,6 +22,7 @@ public class Main {
 	static LinkedList<Enemy> enemys = new LinkedList<Enemy>();
 	static Player player = new Player(300, 300, 50, 1920, 1080, bullets, enemys);
 	static Random r = new Random();
+	static LinkedList<Explosion> explosions = new LinkedList<Explosion>();
 	
     public static void main(String[] args) {
         
@@ -34,13 +35,8 @@ public class Main {
     	int bitDepth = 32; 
     	int refreshRate = 60;
     	
-    	spawnEnemy();
-        
-        Frame f = new Frame(player, enemys, bg, bullets);
-        
-        
         //Frame settings
-        
+        Frame f = new Frame(player, enemys, bg, bullets);       
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(width, height);
         f.setUndecorated(true);
@@ -51,7 +47,7 @@ public class Main {
         
         final float ENEMYSPAWNTIME = 1f;
         float timeSinceLastEnemySpawn = 0;
-
+        
         DisplayMode displayMode = new DisplayMode (width, height, bitDepth, refreshRate);
         GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = environment.getDefaultScreenDevice();
@@ -59,7 +55,7 @@ public class Main {
 		device.setDisplayMode(displayMode);
         
 		long lastFrame = System.currentTimeMillis();
-        
+    	spawnEnemy();
         //Loop that updates important things
         while(true){
             if(Keyboard.isKeyDown(KeyEvent.VK_ESCAPE))System.exit(0);
@@ -85,6 +81,10 @@ public class Main {
             	enemys.get(i).update(timeSinceLastFrame);
             }
             
+            for(int i = 0; i<explosions.size(); i++) {
+            	explosions.get(i).update(timeSinceLastFrame);
+            }
+            
             try {
             	Thread.sleep(15);
             } catch (InterruptedException e) {
@@ -95,8 +95,9 @@ public class Main {
         
     }
     
+    
     public static void spawnEnemy() {
-    	enemys.add(new Enemy(1920,r.nextInt(1080-Enemy.getHeight()), bullets));
+    	enemys.add(new Enemy(1920,r.nextInt((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-Enemy.getHeight()), bullets));
     }
     
 }

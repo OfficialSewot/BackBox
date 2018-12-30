@@ -28,8 +28,13 @@ public class Explosion {
 	public Explosion (float posx, float posy, LinkedList<Enemy> enemys) {
 		
 		this.posx = posx;
-		this.posy =posy;
+		this.posy = posy;
 		
 		
 	}
+	
+	public void update (float timeSinceLastFrame) {
+		
+	}
+	
 }

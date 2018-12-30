@@ -64,20 +64,32 @@ public class Frame extends JFrame{
        
         for(int i = 0; i<enemys.size(); i++) {
         	Enemy e = enemys.get(i);
-        	g.drawImage(e.getLook(), e.getBounding().x, e.getBounding().y, null);
-        	
-        	
+        	g.drawImage(e.getLook(), (int) e.getBounding().getCenterX(), (int) e.getBounding().getCenterY(), null);
+            g.drawOval((int)e.getBounding().getCenterX(), (int)e.getBounding().getCenterY(), 64, 64);
+        	g.setColor(Color.red);
         }
+        
+        
          for(int i = 0;i<bullets.size(); i++){
         	Bullet b = bullets.get(i);
-        	g.drawImage(b.getLook(), b.getBounding().x +5, b.getBounding().y +20, null);
+        	g.drawImage(b.getLook(), (int) b.getBounding().getCenterX() +5,(int) b.getBounding().getCenterY() +20, null);
         }
          
-        g.drawImage(player.getLook(), player.getBounding().x, player.getBounding().y, null);
+        g.drawImage(player.getLook(), (int) player.getBounding().getCenterX(), (int) player.getBounding().getCenterY(), null);
         g.setFont (myFont);
         g.setColor(Color.white);
         g.drawString("Score: " + String.valueOf(Enemy.getScore()), 50, 60);
-        
-        
+        if(player.getHealth()==3) {
+        	g.drawImage(player.getHeart(), 500, 20, null); 
+        	g.drawImage(player.getHeart(), 580, 20, null); 
+        	g.drawImage(player.getHeart(), 660, 20, null); 
+        }
+        else if(player.getHealth()==2) {
+        	g.drawImage(player.getHeart(), 500, 20, null); 
+        	g.drawImage(player.getHeart(), 580, 20, null); 
+        }
+        else if(player.getHealth()==1) {
+        	g.drawImage(player.getHeart(), 500, 20, null); 
+        }
     }
 }

@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import javafx.scene.shape.Circle;
+
 public class Enemy {
 	
 	private static BufferedImage look;
@@ -29,13 +31,13 @@ public class Enemy {
         }
     }
     
-	private Rectangle bounding;
+	private Circle bounding;
     private float posx;
     private float posy;
     
     public Enemy(int x, int y, LinkedList<Bullet> bullets) {
     	
-    	bounding = new Rectangle(x, y, look.getWidth(), look.getHeight());
+    	bounding = new Circle(x, y, (look.getWidth()/2));
     	this.posx = x;
 		this.posy = y;
 		this.bullets = bullets;
@@ -55,24 +57,25 @@ public class Enemy {
 		for(int i = 0; i<bullets.size(); i++) {
 			Bullet b = bullets.get(i);
 			
-			if(alive&&bounding.intersects(b.getBounding())) {
+			if(alive&&collides(bounding, b.getBounding())){
 				alive = false;
 				bullets.remove(b);
 				score++;
 			}
-			
 		}
-        
-		
 //		if (player.isAlive() && bounding.intersects(bounding)) {
 //			enemys.remove(enemys);
 //		} 
 		
-		bounding.x = (int) posx;
-		bounding.y = (int) posy;
+		bounding.setCenterX(posx);
+        bounding.setCenterY(posy);
 	}
 	
-    public Rectangle getBounding(){
+    private static boolean collides(Circle c1, Circle c2) {
+		return Math.pow(c1.getCenterX() - c2.getCenterX(), 2) + Math.pow(c1.getCenterY() - c2.getCenterY(), 2) <= Math.pow(c1.getRadius() + c2.getRadius(), 2);
+	}
+	
+    public Circle getBounding(){
         return bounding;
     }
     
