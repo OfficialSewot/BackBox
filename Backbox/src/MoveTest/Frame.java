@@ -20,6 +20,7 @@ public class Frame extends JFrame{
     
     final Player player;
     final Background bg;
+
        
     private BufferStrategy strat;
     private LinkedList<Enemy> enemys;
@@ -35,7 +36,7 @@ public class Frame extends JFrame{
         this.player = player;
         this.bg = bg;
         this.bullets = bullets;
-        this.
+        this.explosions = explosions;
         
     
     }
@@ -71,8 +72,12 @@ public class Frame extends JFrame{
         	g.setColor(Color.red);
         }
         
+        for(int i = 0; i<explosions.size(); i++) {
+        	Explosion ex = explosions.get(i);
+        	g.drawImage(ex.getLook(), (int)ex.getX(), (int)ex.getY(), null);
+        }
         
-         for(int i = 0;i<bullets.size(); i++){
+        for(int i = 0;i<bullets.size(); i++){
         	Bullet b = bullets.get(i);
         	g.drawImage(b.getLook(), (int) b.getBounding().getCenterX() +5,(int) b.getBounding().getCenterY() +20, null);
         }
@@ -93,5 +98,5 @@ public class Frame extends JFrame{
         else if(player.getHealth()==1) {
         	g.drawImage(player.getHeart(), 500, 20, null); 
         }
-    }
+    }   
 }

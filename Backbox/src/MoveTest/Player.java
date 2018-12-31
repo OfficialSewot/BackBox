@@ -46,6 +46,7 @@ public class Player {
         this.worldsize_y = worldsize_y;
         this.bullets = bullets;
         this.enemys = enemys;
+        this.explosions = explosions;
         this.sprint = 0;
         
     }
@@ -94,10 +95,10 @@ public class Player {
         	    
         	 if(e.isAlive()&&collides(bounding, e.getBounding())){
         		 health--;
+        		 explosions.add(new Explosion((int)e.getBounding().getCenterX(), (int)e.getBounding().getCenterY(), 50));
         		 enemys.remove(e);
         		 if(health==0) {
         			 alive = false;
-        			 
         		 }
         	 }
       	 }
@@ -105,6 +106,10 @@ public class Player {
     private static boolean collides(Circle c1, Circle c2) {
 		return Math.pow(c1.getCenterX() - c2.getCenterX(), 2) + Math.pow(c1.getCenterY() - c2.getCenterY(), 2) <= Math.pow(c1.getRadius() + c2.getRadius(), 2);
 	}
+    public void spawnExplosion(int posx, int posy, float speed) {
+    	explosions.add(new Explosion(posx, posy, speed));
+    }
+    
     public boolean isAlive() {
     	return alive;
     }

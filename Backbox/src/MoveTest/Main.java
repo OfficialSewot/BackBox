@@ -20,9 +20,10 @@ public class Main {
 	static LinkedList<Bullet> bullets = new LinkedList<Bullet>();
 	static Background bg = new Background(50);
 	static LinkedList<Enemy> enemys = new LinkedList<Enemy>();
-	static Player player = new Player(300, 300, 50, 1920, 1080, bullets, enemys);
-	static Random r = new Random();
 	static LinkedList<Explosion> explosions = new LinkedList<Explosion>();
+	static Player player = new Player(300, 300, 50, 1920, 1080, bullets, enemys, explosions);
+	static Random r = new Random();
+
 	
     public static void main(String[] args) {
         
@@ -36,7 +37,7 @@ public class Main {
     	int refreshRate = 60;
     	
         //Frame settings
-        Frame f = new Frame(player, enemys, bg, bullets);       
+        Frame f = new Frame(player, enemys, bg, bullets, explosions);       
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(width, height);
         f.setUndecorated(true);
@@ -55,7 +56,8 @@ public class Main {
 		device.setDisplayMode(displayMode);
         
 		long lastFrame = System.currentTimeMillis();
-    	spawnEnemy();
+    	//spawnEnemy();
+		timeSinceLastEnemySpawn++;
         //Loop that updates important things
         while(true){
             if(Keyboard.isKeyDown(KeyEvent.VK_ESCAPE))System.exit(0);
@@ -97,7 +99,7 @@ public class Main {
     
     
     public static void spawnEnemy() {
-    	enemys.add(new Enemy(1920,r.nextInt((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-Enemy.getHeight()), bullets));
+    	enemys.add(new Enemy(1920,r.nextInt((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-Enemy.getHeight()), bullets, explosions));
     }
     
 }
