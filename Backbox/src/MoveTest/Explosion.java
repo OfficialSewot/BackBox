@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 public class Explosion {
 
 	private static BufferedImage tileset;
-	private float posx;
+    private float posx;
 	private float posy;
 	private static final float NEEDEDANITIME = 1;
 	private float aniTime = 0;
@@ -32,26 +32,24 @@ public class Explosion {
 	
 	public Explosion (float posx, float posy, float speed) {
 		
-		this.posx = posx;
-		this.posy = posy;
+		this.posx = posx-32;
+		this.posy = posy-32;
 		this.speed = 150;
 		this.subx = 0;
+		
         try {
 			for(int i = 0; i<5; i++) {
-				look[i] = tileset.getSubimage(subx, 0, 64, 64);
-				subx=subx+64;
+				look[i] = tileset.getSubimage(subx, 0, 128, 128);
+				subx=subx+128;
 			}
 		} catch (Exception e) {
-			Logger.getLogger(Explosion.class.getName()).log(Level.SEVERE, "i:"+subx+"look:"+look[0]+look[1] );
+			Logger.getLogger(Explosion.class.getName()).log(Level.SEVERE,"tileset.getSubImage");
 		}
 	}
 	
 	public void update (float timeSinceLastFrame) {
 		aniTime += timeSinceLastFrame;
-		if(aniTime>NEEDEDANITIME) {
-			aniTime = 0;
-			
-		}
+		if(aniTime>NEEDEDANITIME)aniTime = 0;
 		posx-=speed*timeSinceLastFrame;
 	}
 	
@@ -63,6 +61,10 @@ public class Explosion {
 			}
 		}
 		return look[look.length-1];
+	}
+	
+	public float getAniTime() {
+		return aniTime;
 	}
 
 	public float getX() {

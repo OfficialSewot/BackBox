@@ -26,7 +26,7 @@ public class Frame extends JFrame{
     private LinkedList<Enemy> enemys;
     private LinkedList<Bullet> bullets;
     private LinkedList<Explosion> explosions;
-    Font myFont = new Font("Arial", 1, 25);
+    //Font myFont = new Font("Arial", 0, 50);
     
     
     public Frame(Player player, LinkedList<Enemy> enemys, Background bg, LinkedList<Bullet> bullets, LinkedList<Explosion> explosions){
@@ -68,8 +68,8 @@ public class Frame extends JFrame{
         for(int i = 0; i<enemys.size(); i++) {
         	Enemy e = enemys.get(i);
         	g.drawImage(e.getLook(), (int) e.getBounding().getCenterX(), (int) e.getBounding().getCenterY(), null);
-            g.drawOval((int)e.getBounding().getCenterX(), (int)e.getBounding().getCenterY(), 64, 64);
-        	g.setColor(Color.red);
+//            g.drawOval((int)e.getBounding().getCenterX(), (int)e.getBounding().getCenterY(), 64, 64);
+//        	g.setColor(Color.red);
         }
         
         for(int i = 0; i<explosions.size(); i++) {
@@ -83,9 +83,10 @@ public class Frame extends JFrame{
         }
          
         g.drawImage(player.getLook(), (int) player.getBounding().getCenterX(), (int) player.getBounding().getCenterY(), null);
-        g.setFont (myFont);
+        Font myFont = g.getFont();
+        g.setFont (new Font(myFont.getName(), Font.BOLD, 45));
         g.setColor(Color.white);
-        g.drawString("Score: " + String.valueOf(Enemy.getScore()), 50, 60);
+        g.drawString("Score: " + String.valueOf(Enemy.getScore()), 1650, 80);
         if(player.getHealth()==3) {
         	g.drawImage(player.getHeart(), 500, 20, null); 
         	g.drawImage(player.getHeart(), 580, 20, null); 

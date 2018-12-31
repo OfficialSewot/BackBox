@@ -1,6 +1,5 @@
 package MoveTest;
 
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -37,7 +36,6 @@ public class Player {
         } catch (IOException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //bounding = new Rectangle(x, y, look.getWidth(), look.getHeight());
         
         f_posx = x;
         f_posy = y;
@@ -50,16 +48,11 @@ public class Player {
         this.sprint = 0;
         
     }
-
-
-
-    
     
     public void update (float timeSinceLastFrame){
         if(!alive) return;
     	timeSinceLastShot+=timeSinceLastFrame;
     	
-        //Hier wird die Bewegungssteuerung an den Player uebergeben
         if(Keyboard.isKeyDown(KeyEvent.VK_W))f_posy-=300*timeSinceLastFrame;
         if(Keyboard.isKeyDown(KeyEvent.VK_S))f_posy+=300*timeSinceLastFrame;
         if(Keyboard.isKeyDown(KeyEvent.VK_D))f_posx+=300*timeSinceLastFrame;
@@ -72,7 +65,6 @@ public class Player {
         
         if(Keyboard.isKeyDown(KeyEvent.VK_SHIFT))sprint++;
         
-        
         if(timeSinceLastShot>SHOTFREQUENZY&&Keyboard.isKeyDown(KeyEvent.VK_SPACE)){
         	timeSinceLastShot = 0;
         	bullets.add(new Bullet(f_posx, f_posy, 500, 0));
@@ -83,20 +75,15 @@ public class Player {
         if(f_posx>worldsize_x-(bounding.getRadius()*2))f_posx=(float) (worldsize_x-(bounding.getRadius()*2));
         if(f_posy>worldsize_y-(bounding.getRadius()*2))f_posy=(float) (worldsize_y-(bounding.getRadius()*2));
     
-        
-        
-        
         bounding.setCenterX(f_posx);
         bounding.setCenterY(f_posy);
-         
+        
          for(int i = 0; i<enemys.size(); i++) {
         	 Enemy e = enemys.get(i);
-        	 
-        	    
-        	 if(e.isAlive()&&collides(bounding, e.getBounding())){
-        		 health--;
+			if(e.isAlive()&&collides(bounding, e.getBounding())){
         		 explosions.add(new Explosion((int)e.getBounding().getCenterX(), (int)e.getBounding().getCenterY(), 50));
         		 enemys.remove(e);
+        		 health--;
         		 if(health==0) {
         			 alive = false;
         		 }
@@ -135,4 +122,3 @@ public class Player {
     	return health;
     }
 }
-

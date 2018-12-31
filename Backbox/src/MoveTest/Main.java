@@ -3,7 +3,6 @@ package MoveTest;
 
 import java.awt.Dimension;
 import java.awt.DisplayMode;
-import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
@@ -52,8 +51,8 @@ public class Main {
         DisplayMode displayMode = new DisplayMode (width, height, bitDepth, refreshRate);
         GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = environment.getDefaultScreenDevice();
-        device.setFullScreenWindow(f);
-		device.setDisplayMode(displayMode);
+        if(device.isFullScreenSupported())device.setFullScreenWindow(f);
+		if(device.isDisplayChangeSupported())device.setDisplayMode(displayMode);
         
 		long lastFrame = System.currentTimeMillis();
     	//spawnEnemy();
@@ -85,6 +84,10 @@ public class Main {
             
             for(int i = 0; i<explosions.size(); i++) {
             	explosions.get(i).update(timeSinceLastFrame);
+                for(int j = 0; j<explosions.size(); j++) {
+       			 Explosion ex = explosions.get(j);
+       			 if(ex.getAniTime()>=0.80)explosions.remove(ex);        		 
+       		 }
             }
             
             try {
