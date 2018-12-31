@@ -1,6 +1,5 @@
 package MoveTest;
 
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -59,13 +58,11 @@ public class Enemy {
 			
 			if(alive&&collides(bounding, b.getBounding())){
 				alive = false;
+				//explosions.add(new Explosion(posx, posy, 50));
 				bullets.remove(b);
 				score++;
 			}
 		}
-//		if (player.isAlive() && bounding.intersects(bounding)) {
-//			enemys.remove(enemys);
-//		} 
 		
 		bounding.setCenterX(posx);
         bounding.setCenterY(posy);
