@@ -34,10 +34,10 @@ public class Enemy {
     private float posx;
     private float posy;
     
-    public Enemy(int x, int y, LinkedList<Bullet> bullets, LinkedList<Explosion> explosions) {
+    public Enemy(int d, int y, LinkedList<Bullet> bullets, LinkedList<Explosion> explosions) {
     	
-    	bounding = new Circle(x, y, (look.getWidth()/2));
-    	this.posx = x;
+    	bounding = new Circle(d, y, (look.getWidth()/2));
+    	this.posx = d;
 		this.posy = y;
 		this.bullets = bullets;
 		

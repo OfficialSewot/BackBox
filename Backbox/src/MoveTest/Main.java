@@ -67,7 +67,7 @@ public class Main {
             
             if(timeSinceLastEnemySpawn>ENEMYSPAWNTIME) {
             	timeSinceLastEnemySpawn-=ENEMYSPAWNTIME;
-            	spawnEnemy();
+            	spawnEnemy(width, height);
             }
             
             player.update(timeSinceLastFrame);
@@ -101,8 +101,9 @@ public class Main {
     }
     
     
-    public static void spawnEnemy() {
-    	enemys.add(new Enemy(1920,r.nextInt((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-Enemy.getHeight()), bullets, explosions));
+    public static void spawnEnemy(int width, int height) {
+//    	enemys.add(new Enemy((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),r.nextInt((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()-Enemy.getHeight()), bullets, explosions));
+    	enemys.add(new Enemy(width,r.nextInt(height-Enemy.getHeight()), bullets, explosions));
     }
     
 }
